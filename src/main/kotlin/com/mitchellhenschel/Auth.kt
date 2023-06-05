@@ -1,8 +1,10 @@
 package com.mitchellhenschel
 
 import com.auth0.jwk.JwkProviderBuilder
+import com.mitchellhenschel.config.BlogConfig
 import com.mitchellhenschel.config.LoginConfig
 import com.mitchellhenschel.config.jwtConfigReader
+import com.mitchellhenschel.features.blog.blogRoutes
 import com.mitchellhenschel.features.contact.contactRoutes
 import com.mitchellhenschel.features.login.JWTService
 import com.mitchellhenschel.features.login.LoginRepo
@@ -22,6 +24,7 @@ fun main(args: Array<String>): Unit =
 fun Application.authModule() {
     val appConfig = this.environment.config
     val loginConfig = LoginConfig(appConfig)
+    val blogConfig = BlogConfig(appConfig)
     val jwtConfig = jwtConfigReader(loginConfig)
     val jwkProvider = JwkProviderBuilder(jwtConfig.issuer)
         .cached(10, 2, TimeUnit.HOURS)
@@ -75,5 +78,6 @@ fun Application.authModule() {
     }
     contactRoutes(loginConfig)
     loginRoutes(jwtService)
+    blogRoutes(blogConfig)
 }
 

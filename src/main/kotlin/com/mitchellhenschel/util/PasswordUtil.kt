@@ -7,28 +7,13 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-class PasswordUtil(private val ivKey: String) {
-    private val keyValue = byteArrayOf(
-        'c'.code.toByte(),
-        'o'.code.toByte(),
-        'd'.code.toByte(),
-        'i'.code.toByte(),
-        'n'.code.toByte(),
-        'g'.code.toByte(),
-        'a'.code.toByte(),
-        'f'.code.toByte(),
-        'f'.code.toByte(),
-        'a'.code.toByte(),
-        'i'.code.toByte(),
-        'r'.code.toByte(),
-        's'.code.toByte(),
-        'c'.code.toByte(),
-        'o'.code.toByte(),
-        'm'.code.toByte()
-    )
+class PasswordUtil(private val ivKey: String, keyWord: String) {
+
+    private val keyValue = ByteArray(keyWord.length)
 
     init {
         Security.addProvider(BouncyCastleProvider())
+        keyWord.toList().forEachIndexed { i, e -> keyValue[i] = e.code.toByte() }
     }
 
     @Throws(Exception::class)
