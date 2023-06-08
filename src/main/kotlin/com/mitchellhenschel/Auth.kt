@@ -10,6 +10,7 @@ import io.ktor.server.plugins.forwardedheaders.*
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
 
+@Suppress("unused")
 fun Application.authModule() {
     val appConfig = this.environment.config
     val loginConfig = LoginConfig(appConfig)
