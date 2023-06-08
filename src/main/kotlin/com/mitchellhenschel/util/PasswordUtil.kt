@@ -8,6 +8,8 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 class PasswordUtil(private val ivKey: String) {
+
+    // TODO: Replace keyValue with keyword
     private val keyValue = byteArrayOf(
         'c'.code.toByte(),
         'o'.code.toByte(),

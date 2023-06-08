@@ -10,15 +10,10 @@ class LoginConfig(appConfig: ApplicationConfig) {
     val hostname: String
     val mariaDbUri: String
     val mariaDbUser: String
-    val issuer: String
-    val audience: String
-    val realm: String
-    val pubKeyId: String
-    val privateKey: String?
-    val keyLocation: String?
     private val mariaDbName: String
     private val key: String?
-    private val sendBlueKey: String?
+    private val keyword: String?
+    private val mailKey: String?
     private val properties = Properties()
 
     init {
@@ -33,13 +28,8 @@ class LoginConfig(appConfig: ApplicationConfig) {
         this.mariaDbUser = properties.getProperty("MARIA_USER")
         this.mariaDbUri = "jdbc:mariadb://$url/$mariaDbName"
         this.key = appConfig.propertyOrNull("ktor.deployment.key")?.getString()
-        this.issuer = appConfig.property("ktor.jwt.issuer").getString()
-        this.audience = appConfig.property("ktor.jwt.audience").getString()
-        this.pubKeyId = appConfig.property("ktor.jwt.pubKeyId").getString()
-        this.realm = appConfig.property("ktor.jwt.realm").getString()
-        this.privateKey = appConfig.propertyOrNull("ktor.jwt.privateKey")?.getString()
-        this.keyLocation = appConfig.propertyOrNull("ktor.jwt.keyLocation")?.getString()
-        this.sendBlueKey = appConfig.propertyOrNull("ktor.email.sendInBlueKey")?.getString()
+        this.keyword = appConfig.propertyOrNull("ktor.security.keyword")?.getString()
+        this.mailKey = appConfig.propertyOrNull("ktor.email.mailKey")?.getString()
     }
 
     fun getPassword(): String {
@@ -58,10 +48,10 @@ class LoginConfig(appConfig: ApplicationConfig) {
     }
 
     fun getEmailKey(): String {
-        if (this.key == null || this.sendBlueKey == null)
+        if (this.key == null || this.mailKey == null)
             throw NotFoundException()
         val passHelper = PasswordUtil(this.key)
-        return passHelper.decrypt(this.sendBlueKey)
+        return passHelper.decrypt(this.mailKey)
     }
 
 }

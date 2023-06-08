@@ -4,15 +4,8 @@ import mu.KotlinLogging
 import java.net.InetAddress
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.util.*
 
 private val log = KotlinLogging.logger {}
-
-/*fun getIdFromDate(): Timestamp {
-    val dFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-    val d = LocalDateTime.now().format(dFormat)
-    return Timestamp.valueOf(d)
-}*/
 
 fun String.convertIpAddressToLong(): Long {
     return try {

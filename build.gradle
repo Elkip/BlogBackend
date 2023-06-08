@@ -64,7 +64,7 @@ dependencies {
     implementation "mysql:mysql-connector-java:8.0.28"
     implementation "org.bouncycastle:bcprov-jdk15on:1.69"
     implementation "io.github.microutils:kotlin-logging-jvm:2.0.10"
-    implementation "org.apache.commons:commons-email:1.5"
+    implementation "com.mailgun:mailgun-java:1.0.8"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.2.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
