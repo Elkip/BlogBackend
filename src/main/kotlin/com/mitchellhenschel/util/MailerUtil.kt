@@ -12,9 +12,11 @@ class MailerUtil(){
 
     private val props = Properties()
     private val log = KotlinLogging.logger {}
+
     init {
        props.load(this.javaClass.classLoader.getResourceAsStream("mail.properties"))
     }
+
     fun sendMessageMail(message: ContactEntity, key: String?) {
         log.info("Preparing to send email")
         val mailgun: MailgunMessagesApi = MailgunClient.config(key).createApi(MailgunMessagesApi::class.java)

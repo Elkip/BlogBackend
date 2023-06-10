@@ -11,6 +11,7 @@ class LoginConfig(appConfig: ApplicationConfig) {
     val mariaDbUri: String
     val mariaDbUser: String
     private val mariaDbName: String
+    private val mariaDbPassEnc: String
     private val key: String?
     private val keyword: String
     private val mailKey: String?
@@ -27,6 +28,7 @@ class LoginConfig(appConfig: ApplicationConfig) {
         this.mariaDbName = properties.getProperty("MARIA_DB")
         this.mariaDbUser = properties.getProperty("MARIA_USER")
         this.mariaDbUri = "jdbc:mariadb://$url/$mariaDbName"
+        this.mariaDbPassEnc = appConfig.property("ktor.db.pass").getString()
         this.key = appConfig.propertyOrNull("ktor.deployment.key")?.getString()
         this.keyword = appConfig.property("ktor.security.keyword").getString()
         this.mailKey = appConfig.propertyOrNull("ktor.email.mailKey")?.getString()
@@ -36,8 +38,7 @@ class LoginConfig(appConfig: ApplicationConfig) {
         if (this.key == null)
             throw NotFoundException()
         val passHelper = PasswordUtil(this.key, this.keyword)
-        val encryptedPass = properties.getProperty("MARIA_PASS")
-        return passHelper.decrypt(encryptedPass)
+        return passHelper.decrypt(this.mariaDbPassEnc)
     }
 
     fun checkPassword(inputPass: String, realPassHash: String): Boolean {
@@ -51,7 +52,8 @@ class LoginConfig(appConfig: ApplicationConfig) {
         if (this.key == null || this.mailKey == null)
             throw NotFoundException()
         val passHelper = PasswordUtil(this.key, this.keyword)
-        return passHelper.decrypt(this.mailKey)
+        val mailKeyDec = passHelper.decrypt(this.mailKey)
+        return mailKeyDec
     }
 
 }

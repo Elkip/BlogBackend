@@ -14,7 +14,9 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import io.ktor.util.logging.*
 import mu.KotlinLogging
+import org.slf4j.LoggerFactory
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -32,7 +34,7 @@ fun Application.module() {
     }
     install(CallLogging) {
         logger = KotlinLogging.logger {}
-        filter { call -> call.request.path().startsWith("/") }
+        //filter { call -> call.request.path().startsWith("/") }
     }
 }
 

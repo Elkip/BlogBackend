@@ -22,7 +22,6 @@ fun Application.contactRoutes(loginConfig: LoginConfig) = routing {
         var newMessage = call.receive<ContactEntity>()
         call.application.environment.log.debug("Received message: $newMessage")
         newMessage = dataHandler.insertMessage(newMessage, call.request.origin.remoteHost)
-
         val emailHelper = MailerUtil()
         emailHelper.sendMessageMail(newMessage, loginConfig.getEmailKey())
         call.respond(newMessage)
