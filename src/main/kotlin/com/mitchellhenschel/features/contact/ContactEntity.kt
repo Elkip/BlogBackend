@@ -16,8 +16,14 @@ data class ContactEntity(
             "\t\"date\":\"$date\",\n\t\"name\":\"$name\",\n\t\"email\":\"$email\"," +
             "\n\t\"message\":\"$message\",\n\t\"ip\":\"${ip.convertLongToIpAddress()}\"\n}"
 
-    fun toHTML(): String = "<html><body><h3>New message from $name at ${ip.convertLongToIpAddress()} received $date</h3> \n\n" +
-            "Message Id: $id \n$message</body></html>"
+    fun toHTML(): String = "<html><body>" +
+            "<h4>$name says: </h4><ul style=\"list-style-type:none;\">" +
+            "<li>$message</li>" +
+            "<li>ID: $id</li>" +
+            "<li>Date: $date</li>" +
+            "<li>Email: $email</li>" +
+            "<li>IP: ${ip.convertLongToIpAddress()}</li>" +
+            "</ul></body></html>"
 
     companion object {
         fun fromRow(resultRow: ResultRow) = ContactEntity(
